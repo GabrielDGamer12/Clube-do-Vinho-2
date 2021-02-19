@@ -15,13 +15,85 @@ const client = new Discord.Client(); //Criação de um novo Client
 const config = require("./config.json"); //Pegando o prefixo do bot para respostas de comandos
 const { prefix } = require("./config.json");
 
-// SEARCH-YOUTUBE
+// SEARCH-YOUTUBE //
+//----------------//
+// SEARCH-YOUTUBE //
 
-// SEARCH-YOUTUBE
+// BAN-AND-KICK-COMMAND //
+const command = require('./command')
+
+client.on('ready', () => {
+  console.log('O Cliente está pronto!')
+
+  command(client, 'ban', (message) => {
+    const { member, mentions } = message
+
+    const tag = `<@${member.id}>`
+
+    if (
+      member.hasPermission('ADMINISTRATOR') ||
+      member.hasPermission('BAN_MEMBERS')
+    ) {
+      const target = mentions.users.first()
+      if (target) {
+        const targetMember = message.guild.members.cache.get(target.id)
+        targetMember.ban() 
+        warns_channel = client.channels.cache.get('729889550809432124');
+        warns_channel.send(`──── Banimento ────
+
+:boy: Usuario: ${targetMember}
+:boy: ID: ${target.id}
+
+👮 Punido por: ${tag} 
+
+──── Banimento ────`)
+      } else {
+        message.channel.send(`${tag} Especifique alguém para banir.`)
+      }
+    } else {
+      message.channel.send(
+        `${tag} Você não tem permissão para usar este comando.`
+      )
+    }
+  })
+
+  command(client, 'kick', (message) => {
+    const { member, mentions } = message
+
+    const tag = `<@${member.id}>`
+
+    if (
+      member.hasPermission('ADMINISTRATOR') ||
+      member.hasPermission('KICK_MEMBERS')
+    ) {
+      const target = mentions.users.first()
+      if (target) {
+        const targetMember = message.guild.members.cache.get(target.id)
+        warns_channel = client.channels.cache.get('729889550809432124');        
+        targetMember.kick()
+        warns_channel.send(`──── Expulso ────
+
+:boy: Usuario: ${targetMember}
+:boy: ID: ${target.id}
+
+👮 Punido por: ${tag}
+
+──── Expulso ────`)
+      } else {
+        message.channel.send(`${tag} Especifique alguém para expulsar.`)
+      }
+    } else {
+      message.channel.send(
+        `${tag} Você não tem permissão para usar este comando.`
+      )
+    }
+  })
+})
+
+// BAN-AND-KICK-COMMAND //
 
 
-
-//  MUSIC-YOUTUBE
+//  MUSIC-YOUTUBE //
 
 const queue = new Map();
 
@@ -144,9 +216,9 @@ function play(guild, song) {
 }
 
 
-// MUSIC-YOUTUBE
+// MUSIC-YOUTUBE //
 
-// BYE-BYE
+// BYE-BYE //
 
 client.on("guildMemberRemove", async (member) => {
 
@@ -169,9 +241,9 @@ client.on("guildMemberRemove", async (member) => {
   }
 });
 
-// BYE-BYE
+// BYE-BYE //
 
-// WELCOME
+// WELCOME //
 
 client.on("guildMemberAdd", async (member) => {
 
@@ -196,7 +268,7 @@ client.on("guildMemberAdd", async (member) => {
 
 //  WELCOME
 
-//  HANDLER
+//  HANDLER //
 
 client.on('message', message => {
   if (message.author.bot) return;
@@ -217,7 +289,7 @@ client.on('message', message => {
   }
 });
 
-//  HANDLER
+//  HANDLER //
 
 
 
