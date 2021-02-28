@@ -19,6 +19,27 @@ const { prefix } = require("./config.json");
 //----------------//
 // SEARCH-YOUTUBE //
 
+// BOT-STATUS //
+
+client.on("ready", () => {
+  let activities = [
+      `Utilize ${config.prefix}ajuda para obter Ajuda`,
+      `${client.users.cache.size} membros!`,
+      `Clube do Vinho🍷`,
+      `Codigo Aberto: +codigo`
+    ],
+    i = 0;
+  setInterval( () => client.user.setActivity(`${activities[i++ % activities.length]}`, {
+        type: "PLAYING"
+      }), 1000 * 60); 
+  client.user
+      .setStatus("online")
+      .catch(console.error);
+console.log("Estou Online!")
+});
+
+// BOT-STATUS //
+
 // UNBAN-COMMAND //
 
 
