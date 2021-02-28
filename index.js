@@ -19,11 +19,18 @@ const { prefix } = require("./config.json");
 //----------------//
 // SEARCH-YOUTUBE //
 
+// UNBAN-COMMAND //
+
+
+
+// UNBAN-COMMAND //
+
+
 // BAN-AND-KICK-COMMAND //
 const command = require('./command')
 
 client.on('ready', () => {
-  console.log('O Cliente está pronto!')
+
 
   command(client, 'ban', (message) => {
     const { member, mentions } = message
@@ -154,7 +161,7 @@ async function execute(message, serverQueue) {
       voiceChannel: voiceChannel,
       connection: null,
       songs: [],
-      volume: 5,
+      volume: 3,
       playing: true
     };
 
