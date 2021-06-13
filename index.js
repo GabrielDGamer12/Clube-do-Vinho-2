@@ -15,6 +15,8 @@ const client = new Discord.Client(); //Criação de um novo Client
 const config = require("./config.json"); //Pegando o prefixo do bot para respostas de comandos
 const { prefix } = require("./config.json");
 
+const leaveCounter = require('./counters/leave-count')
+const joinCounter = require('./counters/join-count')
 // SEARCH-YOUTUBE //
 //----------------//
 // SEARCH-YOUTUBE //
@@ -35,91 +37,11 @@ client.on("ready", () => {
   client.user
       .setStatus("online")
       .catch(console.error);
-console.log("Estou Online!")
+console.log("Estou Online!");
+joinCounter(client);
 });
 
 // BOT-STATUS //
-
-// UNBAN-COMMAND //
-
-
-
-// UNBAN-COMMAND //
-
-
-// BAN-AND-KICK-COMMAND //
-const command = require('./command')
-
-client.on('ready', () => {
-
-
-  command(client, 'ban', (message) => {
-    const { member, mentions } = message
-
-    const tag = `<@${member.id}>`
-
-    if (
-      member.hasPermission('ADMINISTRATOR') ||
-      member.hasPermission('BAN_MEMBERS')
-    ) {
-      const target = mentions.users.first()
-      if (target) {
-        const targetMember = message.guild.members.cache.get(target.id)
-        targetMember.ban() 
-        warns_channel = client.channels.cache.get('729889550809432124');
-        warns_channel.send(`──── Banimento ────
-
-:boy: Usuario: ${targetMember}
-:boy: ID: ${target.id}
-
-👮 Punido por: ${tag} 
-
-──── Banimento ────`)
-      } else {
-        message.channel.send(`${tag} Especifique alguém para banir.`)
-      }
-    } else {
-      message.channel.send(
-        `${tag} Você não tem permissão para usar este comando.`
-      )
-    }
-  })
-
-  command(client, 'kick', (message) => {
-    const { member, mentions } = message
-
-    const tag = `<@${member.id}>`
-
-    if (
-      member.hasPermission('ADMINISTRATOR') ||
-      member.hasPermission('KICK_MEMBERS')
-    ) {
-      const target = mentions.users.first()
-      if (target) {
-        const targetMember = message.guild.members.cache.get(target.id)
-        warns_channel = client.channels.cache.get('729889550809432124');        
-        targetMember.kick()
-        warns_channel.send(`──── Expulso ────
-
-:boy: Usuario: ${targetMember}
-:boy: ID: ${target.id}
-
-👮 Punido por: ${tag}
-
-──── Expulso ────`)
-      } else {
-        message.channel.send(`${tag} Especifique alguém para expulsar.`)
-      }
-    } else {
-      message.channel.send(
-        `${tag} Você não tem permissão para usar este comando.`
-      )
-    }
-  })
-})
-
-// BAN-AND-KICK-COMMAND //
-
 
 //  MUSIC-YOUTUBE //
 
